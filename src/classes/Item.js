@@ -1,3 +1,4 @@
+import {generateRandomString} from '../util/randomStringGenerator';
 export default class Item {
 
     /**
@@ -9,10 +10,12 @@ export default class Item {
      * @param {String}image
      * @param {String} imageDescription
      */
-    constructor(name, description, sizes, price, image, imageDescription) {
+    constructor(name, description, sizes, selectedSize, price, image, imageDescription) {
+        this.id = generateRandomString();
         this.name = name;
         this.description = description;
         this.sizes = sizes;
+        this.selectedSize =
         this.price = price;
         this.image = image;
         this.imageDescription = imageDescription;

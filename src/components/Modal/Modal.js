@@ -26,13 +26,31 @@ const DialogContent = withStyles(theme => ({
 
 class CustomizedDialogs extends React.Component {
 
+  state = {
+    selectedSize: null
+  };
+
+  handleSelectSize = (value) => {
+    this.setState({selectedSize: value});
+  };
+
+  insertToSelectItem = (id, selectedSize) => {
+    const {insertToSelectItem} = this.props;
+    if (this.state.selectedSize) {
+      insertToSelectItem(id, selectedSize);
+    }
+    else {
+      alert('You should select a size');
+    }
+  };
+
   render() {
 
     const {item} = this.props;
 
     if (item) {
-        const radioComponents = item.sizes.map(size => (
-            <Radio value={size} label={size.toUpperCase()}/>
+        const radioComponents = item.sizes.map((size, index) => (
+            <Radio key={index} value={size} label={size.toUpperCase()}/>
         ));
 
         return (
@@ -55,10 +73,10 @@ class CustomizedDialogs extends React.Component {
                   </Typography>
 
                   <FormControl component="fieldset">
-                    <RadioGroup>
+                    <RadioGroup onChange={(e)=> this.handleSelectSize(e.target.value)}>
                         {radioComponents}
                     </RadioGroup>
-                    <Button btnColor="primary">
+                    <Button btnColor="primary" onClick={() => this.insertToSelectItem(item.id, this.state.selectedSize)}>
                       Select
                     </Button>
                   </FormControl>

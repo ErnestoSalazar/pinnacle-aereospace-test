@@ -32,6 +32,11 @@
     align-items: center;
 }
 
+.selected-item {
+    border: 1px solid red;
+    background-color: #8e7dc3;
+}
+
 @media (min-width: 587px) {
     .card {
         flex-direction: column;

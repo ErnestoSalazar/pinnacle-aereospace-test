@@ -11,9 +11,9 @@ import Button from '../Button';
 import ('./index.css');
 
 
-export default function MenuCard({index, handleModal, name, price}) {
+export default function MenuCard({index, handleModal, name, price, className}) {
   return (
-    <Card className={'card'}>
+    <Card className={`card ${className}`}>
       <div className={'card-image-wrapper card-item'}>
         <CardMedia
           className={'card-media'}

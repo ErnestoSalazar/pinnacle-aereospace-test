@@ -22,17 +22,25 @@ class MenuBoard extends Component {
 
     render() {
 
-        const {items, selectedItemIndex} = this.props;
+        const {items, selectedItemIndex, selectedItems, dispatch} = this.props;
 
-        const itemComponents = items.map((item, index) => (
-            <MenuCard
-                key={index}
-                index={index}
-                handleModal={this.handleModal}
-                name={item.name}
-                price={item.price}
-            />
-        ));
+        const insertToSelctedItem = bindActionCreators(ItemActionCreators.insertToSelectedItem, dispatch);
+
+        const itemComponents = items.map((item, index) => {
+            const isSelected = selectedItems.find(id => id === item.id);
+            const selectedClassName = (isSelected) ? 'selected-item' : '';
+
+            return (
+                <MenuCard
+                    className={selectedClassName}
+                    key={index}
+                    index={index}
+                    handleModal={this.handleModal}
+                    name={item.name}
+                    price={item.price}
+                />
+            );
+        });
 
         let selectedItem;
         if(selectedItemIndex !== -1) selectedItem = items[selectedItemIndex];
@@ -46,6 +54,7 @@ class MenuBoard extends Component {
                 <Modal isOpen={this.state.isModalOpen}
                        handleClose={this.handleModal}
                        item={selectedItem}
+                       insertToSelectItem={insertToSelctedItem}
 
                 />
                 <FloatingButton btnPosition='fixed-bottom-right'/>
@@ -58,7 +67,8 @@ class MenuBoard extends Component {
 const mapStateToProps = state => (
     {
         items: state.items,
-        selectedItemIndex: state.selectedItemIndex
+        selectedItemIndex: state.selectedItemIndex,
+        selectedItems: state.selectedItems
     }
 );
 
