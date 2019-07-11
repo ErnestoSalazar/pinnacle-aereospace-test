@@ -1,8 +1,8 @@
-import * as itemActionTypes from '../actiontypes/item';
+import * as ItemActionTypes from '../actiontypes/item';
 
 export const addItem = (name, description, sizes, image, imageDescription) => {
     return {
-        type: itemActionTypes.ADD_ITEM,
+        type: ItemActionTypes.ADD_ITEM,
         name,
         description,
         sizes,
@@ -13,14 +13,14 @@ export const addItem = (name, description, sizes, image, imageDescription) => {
 
 export const removeItem = index => {
     return {
-        type: itemActionTypes.REMOVE_ITEM,
+        type: ItemActionTypes.REMOVE_ITEM,
         index
     };
 };
 
 export const updateItem = (index, name, description, sizes, image, imageDescription) => {
     return {
-        type: itemActionTypes.UPDATE_ITEM,
+        type: ItemActionTypes.UPDATE_ITEM,
         index,
         name,
         description,
