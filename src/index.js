@@ -1,21 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-
-import './index.css';
-
-import * as serviceWorker from './serviceWorker';
+import {Provider} from "react-redux";
+import {createStore} from 'redux';
 
 // containers
 import MenuBoard from './containers/MenuBoard';
 
 // reducers
+import ItemReducer from './reducers/item';
 
+import './index.css';
+import * as serviceWorker from './serviceWorker';
 
-// const store = createStore(()=>)
+const store = createStore(
+    ItemReducer,
+    window.devToolsExtension && window.devToolsExtension() // this piece of data allow us to connect our app with redux devtools extension
+);
+
 
 ReactDOM.render(
-    <MenuBoard />
+    <Provider store={store}>
+        <MenuBoard />
+    </Provider>
     ,
     document.getElementById('root'));
 

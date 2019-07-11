@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+
+import {connect} from "react-redux";
+
 import MenuCard from '../components/Card/MenuCard';
 import Modal from '../components/Modal/Modal';
 
-export default class MenuBoard extends Component {
+class MenuBoard extends Component {
 
     state = {
         isModalOpen: false
@@ -41,3 +44,15 @@ export default class MenuBoard extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => (
+    {
+        items: state
+    }
+);
+
+
+
+
+export default connect(mapStateToProps)(MenuBoard);
