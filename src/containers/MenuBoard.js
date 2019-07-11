@@ -16,28 +16,23 @@ class MenuBoard extends Component {
     };
 
     render() {
+
+        const itemComponents = this.props.items.map(item => (
+            <MenuCard
+                handleModal={this.handleModal}
+                name={item.name}
+                price={item.price}
+            />
+        ));
+
+
         return (
             <div className="container">
                 <div className="row space-around">
-                    <MenuCard handleModal={this.handleModal}/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
-                    <MenuCard/>
+                    {itemComponents}
                 </div>
-
                 <Modal isOpen={this.state.isModalOpen}
-                       handleClose={this.handleModal}
-                >
+                       handleClose={this.handleModal} >
 
                 </Modal>
             </div>
@@ -48,7 +43,7 @@ class MenuBoard extends Component {
 
 const mapStateToProps = state => (
     {
-        items: state
+        items: state.items
     }
 );
 
