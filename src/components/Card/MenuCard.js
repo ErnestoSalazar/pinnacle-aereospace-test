@@ -11,7 +11,7 @@ import Button from '../Button';
 import ('./index.css');
 
 
-export default function MenuCard({handleModal}) {
+export default function MenuCard({index, handleModal, name, price}) {
   return (
     <Card className={'card'}>
       <div className={'card-image-wrapper card-item'}>
@@ -23,14 +23,14 @@ export default function MenuCard({handleModal}) {
       </div>
       <CardContent className="card-item text-center">
         <Typography variant="body2" color="textSecondary" component="p">
-          Alcachofa rellena de atun y escencias espaciales
+          {name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          $00.00
+          ${price}
         </Typography>
       </CardContent>
       <CardContent className="card-item">
-        <Button btnColor="primary" onClick={handleModal}>Details</Button>
+        <Button btnColor="primary" onClick={() => handleModal(index)}>Details</Button>
       </CardContent>
     </Card>
   );

@@ -27,42 +27,50 @@ const DialogContent = withStyles(theme => ({
 class CustomizedDialogs extends React.Component {
 
   render() {
-    return (
-        <Dialog
-          onClose={this.props.handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={this.props.isOpen}
-        >
-          <DialogContent dividers>
-            <div className={"modal"}>
-              <div className="item">
-                <img alt={this.props.imageAlt} src="https://tecreview.tec.mx/wp-content/uploads/2017/07/iStock-180258510.jpg"/>
-              </div>
-              <div className="item">
-                <Typography variant="h6" color="textSecondary">
-                  Receta 1 bien sabrosa sabron!
-                </Typography>
-                <Typography gutterBottom>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-                  at eros.
-                </Typography>
 
-                <FormControl component="fieldset">
-                  <RadioGroup>
-                    <Radio value="s" label='S'/>
-                    <Radio value="l" label='L'/>
-                    <Radio value="M" label='M'/>
-                  </RadioGroup>
-                  <Button btnColor="primary">
-                    Select
-                  </Button>
-                </FormControl>
+    const {item} = this.props;
+
+    if (item) {
+        const radioComponents = item.sizes.map(size => (
+            <Radio value={size} label={size.toUpperCase()}/>
+        ));
+
+        return (
+          <Dialog
+              onClose={this.props.handleClose}
+              aria-labelledby="customized-dialog-title"
+              open={this.props.isOpen}
+          >
+            <DialogContent dividers>
+              <div className={"modal"}>
+                <div className="item">
+                  <img alt={this.props.imageAlt} src="https://tecreview.tec.mx/wp-content/uploads/2017/07/iStock-180258510.jpg"/>
+                </div>
+                <div className="item">
+                  <Typography variant="h6" color="textSecondary">
+                    {item.name}
+                  </Typography>
+                  <Typography gutterBottom>
+                    {item.description}
+                  </Typography>
+
+                  <FormControl component="fieldset">
+                    <RadioGroup>
+                        {radioComponents}
+                    </RadioGroup>
+                    <Button btnColor="primary">
+                      Select
+                    </Button>
+                  </FormControl>
+                </div>
               </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-    );
+            </DialogContent>
+          </Dialog>
+        );
+    }
+    else {
+        return ("")
+    }
   }
 }
 
