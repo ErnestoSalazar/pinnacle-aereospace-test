@@ -51,6 +51,13 @@ export default function Item (state = initialState, action) {
             }
         }
 
+        case ItemActioTypes.SELECT_ITEM: {
+            return {
+                ...state,
+                selectedItemIndex: action.index
+            }
+        }
+
         default: {
             return state;
         }

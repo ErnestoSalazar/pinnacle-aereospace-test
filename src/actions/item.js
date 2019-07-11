@@ -29,3 +29,12 @@ export const updateItem = (index, name, description, sizes, image, imageDescript
         imageDescription
     }
 };
+
+
+
+export const selectItem = index => {
+    return {
+        type: ItemActionTypes.SELECT_ITEM,
+        index
+    };
+};
