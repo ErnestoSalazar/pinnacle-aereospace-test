@@ -32,6 +32,7 @@ class MenuBoard extends Component {
 
         const insertToSelctedItem = bindActionCreators(ItemActionCreators.insertToSelectedItem, dispatch);
         const addItem = bindActionCreators(ItemActionCreators.addItem, dispatch);
+        const updateItem = bindActionCreators(ItemActionCreators.updateItem, dispatch);
 
         const itemComponents = items.map((item, index) => {
             const isSelected = selectedItems.find(sItem => sItem.id === item.id);
@@ -45,6 +46,8 @@ class MenuBoard extends Component {
                     handleModal={this.handleModal}
                     name={item.name}
                     price={item.price}
+                    image={item.image}
+                    imageDescription={item.imageDescription}
                 />
             );
         });
@@ -62,6 +65,7 @@ class MenuBoard extends Component {
                        handleClose={this.handleModal}
                        item={selectedItem}
                        insertToSelectItem={insertToSelctedItem}
+                       updateItem={updateItem}
 
                 />
                 <ItemAddUpdate

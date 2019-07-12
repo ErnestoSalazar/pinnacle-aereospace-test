@@ -11,14 +11,14 @@ import Button from '../Button';
 import ('./index.css');
 
 
-export default function MenuCard({index, handleModal, name, price, className}) {
+export default function MenuCard({index, handleModal, name, price, className, image, imageDescription}) {
   return (
     <Card className={`card ${className}`}>
       <div className={'card-image-wrapper card-item'}>
         <CardMedia
           className={'card-media'}
-          image="https://foodrevolution.org/wp-content/uploads/2018/03/blog-featured_healthy_foods-20180306.jpg"
-          title="Paella dish"
+          image={image}
+          title={imageDescription}
           />
       </div>
       <CardContent className="card-item text-center">

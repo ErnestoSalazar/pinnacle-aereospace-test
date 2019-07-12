@@ -26,6 +26,10 @@ fieldset > div > label {
     height: 30px;
 }
 
+.modal + button {
+    float: right;
+}
+
 
 @media (min-width: 796px) {
 

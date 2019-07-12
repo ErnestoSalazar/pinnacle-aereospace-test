@@ -1,10 +1,11 @@
 import * as ItemActionTypes from '../actiontypes/item';
 
-export const addItem = (name, description, sizes, image, imageDescription) => {
+export const addItem = (name, description, price, sizes, image, imageDescription) => {
     return {
         type: ItemActionTypes.ADD_ITEM,
         name,
         description,
+        price,
         sizes,
         image,
         imageDescription
@@ -18,12 +19,13 @@ export const removeItem = index => {
     };
 };
 
-export const updateItem = (index, name, description, sizes, selectedSize, image, imageDescription) => {
+export const updateItem = (index, name, description, price, sizes, selectedSize, image, imageDescription) => {
     return {
         type: ItemActionTypes.UPDATE_ITEM,
         index,
         name,
         description,
+        price,
         sizes,
         selectedSize,
         image,

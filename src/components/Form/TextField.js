@@ -16,6 +16,10 @@ export default class TextField extends Component {
         return this.state.value;
     }
 
+    setValue(value) {
+        this.setState({value});
+    }
+
     render() {
 
         const {label, type} = this.props;
@@ -23,7 +27,7 @@ export default class TextField extends Component {
         return (
             <TextFieldC
                 autoFocus
-                value={this.state.value}
+                value={this.state.value || this.props.value}
                 margin="dense"
                 label={label}
                 type={type}

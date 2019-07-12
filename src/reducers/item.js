@@ -1,9 +1,26 @@
 import * as ItemActioTypes from '../actiontypes/item';
 import ItemC from '../classes/Item';
 
+import faker from 'faker';
+
+let itemsArr = [];
+(function() {
+    for (let i = 0; i < 100; i++) {
+        const randomProductName = faker.commerce.productName();
+        const sizes = ['s', 'm', 'l'];
+        const price = faker.commerce.price();
+        const image = faker.image.food();
+
+        const item = new ItemC(randomProductName, randomProductName, sizes, null, price, image, randomProductName);
+        itemsArr.push(item);
+    }
+}());
+
 
 const initialState = {
-    items: [],
+    items: [
+        ...itemsArr
+    ],
     selectedItems: [],
     selectedItemIndex: -1
 };

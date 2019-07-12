@@ -5,10 +5,12 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
+import Icon from "@material-ui/core/Icon";
 
 // components
 import Radio from '../Form/Radio';
 import Button from '../Button';
+import ItemAddUpdate from "../../containers/ItemAddUpdate";
 
 
 
@@ -27,17 +29,23 @@ const DialogContent = withStyles(theme => ({
 class CustomizedDialogs extends React.Component {
 
   state = {
-    selectedSize: null
+    selectedSize: null,
+    isFormModalOpen: false
   };
 
   handleSelectSize = (value) => {
     this.setState({selectedSize: value});
   };
 
+  handleItemModalForm = () => {
+    this.setState({isFormModalOpen: !this.state.isFormModalOpen});
+  };
+
   insertToSelectItem = (id, selectedSize) => {
-    const {insertToSelectItem} = this.props;
+    const {insertToSelectItem, handleClose} = this.props;
     if (this.state.selectedSize) {
       insertToSelectItem(id, selectedSize);
+      handleClose();
     }
     else {
       alert('You should select a size');
@@ -46,14 +54,14 @@ class CustomizedDialogs extends React.Component {
 
   render() {
 
-    const {item} = this.props;
+    const {item, updateItem} = this.props;
 
     if (item) {
         const radioComponents = item.sizes.map((size, index) => (
             <Radio key={index} value={size} label={size.toUpperCase()}/>
         ));
 
-        return (
+        return [
           <Dialog
               onClose={this.props.handleClose}
               aria-labelledby="customized-dialog-title"
@@ -62,7 +70,7 @@ class CustomizedDialogs extends React.Component {
             <DialogContent dividers>
               <div className={"modal"}>
                 <div className="item">
-                  <img alt={this.props.imageAlt} src="https://tecreview.tec.mx/wp-content/uploads/2017/07/iStock-180258510.jpg"/>
+                  <img alt={item.imageDescription} src={item.image}/>
                 </div>
                 <div className="item">
                   <Typography variant="h6" color="textSecondary">
@@ -74,7 +82,7 @@ class CustomizedDialogs extends React.Component {
 
                   <FormControl component="fieldset">
                     <RadioGroup onChange={(e)=> this.handleSelectSize(e.target.value)}>
-                        {radioComponents}
+                      {radioComponents}
                     </RadioGroup>
                     <Button btnColor="primary" onClick={() => this.insertToSelectItem(item.id, this.state.selectedSize)}>
                       Select
@@ -82,9 +90,21 @@ class CustomizedDialogs extends React.Component {
                   </FormControl>
                 </div>
               </div>
+              <Button variant="contained" className={'edit-button'} onClick={this.handleItemModalForm}>
+                Edit
+                {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
+                <Icon>edit</Icon>
+              </Button>
             </DialogContent>
+            <ItemAddUpdate
+                isOpen={this.state.isFormModalOpen}
+                handleClose={this.handleItemModalForm}
+                item={item}
+                updateItem={updateItem}
+
+            />
           </Dialog>
-        );
+        ]
     }
     else {
         return ("")
