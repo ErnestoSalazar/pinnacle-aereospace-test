@@ -11,6 +11,9 @@ import TextField from '../components/Form/TextField';
 import Checkbox from '../components/Form/Checkbox';
 import FormLabel from "@material-ui/core/FormLabel";
 
+// classes
+import Item from '../classes/Item';
+
 export default class ItemAddUpdate extends Component {
 
     state = {
@@ -65,16 +68,11 @@ export default class ItemAddUpdate extends Component {
             imageDescription&&
             selectedItems.length
         ) {
-            const {addItem} = this.props;
+            const {addItem, handleAddItem} = this.props;
 
-            addItem(
-                name,
-                description,
-                price,
-                selectedItems.map(size => size.value),
-                image,
-                imageDescription
-            );
+            const item = new Item(name, description, selectedItems.map(size => size.value), null, price, image, imageDescription);
+            addItem(item);
+            handleAddItem(item)
             this.props.handleClose();
         }
         else {

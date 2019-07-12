@@ -1,14 +1,9 @@
 import * as ItemActionTypes from '../actiontypes/item';
 
-export const addItem = (name, description, price, sizes, image, imageDescription) => {
+export const addItem = (item) => {
     return {
         type: ItemActionTypes.ADD_ITEM,
-        name,
-        description,
-        price,
-        sizes,
-        image,
-        imageDescription
+        item
     };
 };
 

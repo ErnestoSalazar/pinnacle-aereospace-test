@@ -8,13 +8,22 @@ import MenuCard from '../components/Card/MenuCard';
 import Modal from '../components/Modal/Modal';
 import FloatingButton from '../components/FloatingButton/FloatingButton';
 import ItemAddUpdate from "./ItemAddUpdate";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class MenuBoard extends Component {
 
     state = {
         isModalOpen: false,
-        isFormModalOpen: false
+        isFormModalOpen: false,
+        items: [],
+        hasMore: true
     };
+
+    componentDidMount() {
+        this.setState({
+            items: this.props.items.slice(0, 30)
+        });
+    }
 
     handleModal = (index) => {
         this.setState({isModalOpen: !this.state.isModalOpen});
@@ -26,6 +35,28 @@ class MenuBoard extends Component {
         this.setState({isFormModalOpen: !this.state.isFormModalOpen});
     };
 
+    fetchMoreData = () => {
+        const nextItemsInArray = this.props.items.slice(0, this.state.items.length + 30);
+        setTimeout(() => {
+
+            const hasMore = (nextItemsInArray.length !== this.props.items.length);
+
+            this.setState({
+                items:nextItemsInArray,
+                hasMore
+            });
+        }, 1000);
+    };
+
+    handleAddItem = (item) => {
+        this.setState({
+            items: [
+                item,
+                ...this.state.items
+            ]
+        });
+    };
+
     render() {
 
         const {items, selectedItemIndex, selectedItems, dispatch} = this.props;
@@ -34,23 +65,6 @@ class MenuBoard extends Component {
         const addItem = bindActionCreators(ItemActionCreators.addItem, dispatch);
         const updateItem = bindActionCreators(ItemActionCreators.updateItem, dispatch);
 
-        const itemComponents = items.map((item, index) => {
-            const isSelected = selectedItems.find(sItem => sItem.id === item.id);
-            const selectedClassName = (isSelected) ? 'selected-item' : '';
-
-            return (
-                <MenuCard
-                    className={selectedClassName}
-                    key={index}
-                    index={index}
-                    handleModal={this.handleModal}
-                    name={item.name}
-                    price={item.price}
-                    image={item.image}
-                    imageDescription={item.imageDescription}
-                />
-            );
-        });
 
         let selectedItem;
         if(selectedItemIndex !== -1) selectedItem = items[selectedItemIndex];
@@ -58,9 +72,33 @@ class MenuBoard extends Component {
 
         return (
             <div className="container">
-                <div className="row space-around">
-                    {itemComponents}
-                </div>
+                <InfiniteScroll
+                    dataLength={this.state.items.length}
+                    next={this.fetchMoreData}
+                    hasMore={this.state.hasMore}
+                    loader={<h4>Loading...</h4>}
+                >
+                    <div className="row space-around">
+                        {this.state.items.map((item, index) => {
+                            const isSelected = selectedItems.find(sItem => sItem.id === item.id);
+                            const selectedClassName = (isSelected) ? 'selected-item' : '';
+
+                            return (
+                                <MenuCard
+                                    className={selectedClassName}
+                                    key={index}
+                                    index={index}
+                                    handleModal={this.handleModal}
+                                    name={item.name}
+                                    price={item.price}
+                                    image={item.image}
+                                    imageDescription={item.imageDescription}
+                                />
+                            );
+                        })}
+                    </div>
+                </InfiniteScroll>
+
                 <Modal isOpen={this.state.isModalOpen}
                        handleClose={this.handleModal}
                        item={selectedItem}
@@ -71,6 +109,7 @@ class MenuBoard extends Component {
                 <ItemAddUpdate
                     isOpen={this.state.isFormModalOpen}
                     handleClose={this.handleItemModalForm}
+                    handleAddItem={this.handleAddItem}
                     addItem={addItem}
                 />
                 <FloatingButton
