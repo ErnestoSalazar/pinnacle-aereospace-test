@@ -7,11 +7,13 @@ import {connect} from "react-redux";
 import MenuCard from '../components/Card/MenuCard';
 import Modal from '../components/Modal/Modal';
 import FloatingButton from '../components/FloatingButton/FloatingButton';
+import ItemAddUpdate from "./ItemAddUpdate";
 
 class MenuBoard extends Component {
 
     state = {
-        isModalOpen: false
+        isModalOpen: false,
+        isFormModalOpen: false
     };
 
     handleModal = (index) => {
@@ -20,14 +22,19 @@ class MenuBoard extends Component {
         selectItem(index);
     };
 
+    handleItemModalForm = () => {
+        this.setState({isFormModalOpen: !this.state.isFormModalOpen});
+    };
+
     render() {
 
         const {items, selectedItemIndex, selectedItems, dispatch} = this.props;
 
         const insertToSelctedItem = bindActionCreators(ItemActionCreators.insertToSelectedItem, dispatch);
+        const addItem = bindActionCreators(ItemActionCreators.addItem, dispatch);
 
         const itemComponents = items.map((item, index) => {
-            const isSelected = selectedItems.find(id => id === item.id);
+            const isSelected = selectedItems.find(sItem => sItem.id === item.id);
             const selectedClassName = (isSelected) ? 'selected-item' : '';
 
             return (
@@ -57,7 +64,15 @@ class MenuBoard extends Component {
                        insertToSelectItem={insertToSelctedItem}
 
                 />
-                <FloatingButton btnPosition='fixed-bottom-right'/>
+                <ItemAddUpdate
+                    isOpen={this.state.isFormModalOpen}
+                    handleClose={this.handleItemModalForm}
+                    addItem={addItem}
+                />
+                <FloatingButton
+                    btnPosition='fixed-bottom-right'
+                    onClick={this.handleItemModalForm}
+                />
             </div>
         )
     }

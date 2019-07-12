@@ -1,12 +1,11 @@
 import * as ItemActionTypes from '../actiontypes/item';
 
-export const addItem = (name, description, sizes, selectedSize, image, imageDescription) => {
+export const addItem = (name, description, sizes, image, imageDescription) => {
     return {
         type: ItemActionTypes.ADD_ITEM,
         name,
         description,
         sizes,
-        selectedSize,
         image,
         imageDescription
     };

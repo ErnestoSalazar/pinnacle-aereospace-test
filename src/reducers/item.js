@@ -12,7 +12,7 @@ export default function Item (state = initialState, action) {
 
     switch (action.type) {
         case ItemActioTypes.ADD_ITEM: {
-            const item = new ItemC(action.name, action.description, action.sizes, action.selectedSize, action.price, action.image, action.imageDescription);
+            const item = new ItemC(action.name, action.description, action.sizes, null, action.price, action.image, action.imageDescription);
             const addedItemList = [
                 ...state.items,
                 item

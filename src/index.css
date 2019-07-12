@@ -30,6 +30,10 @@ body {
     width: 90%;
   }
 
+  .add-item-form > div:nth-child(3) > div {
+    min-width: 50%;
+  }
+
 }
 
 @media (min-width: 1025px) {
